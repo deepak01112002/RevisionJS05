@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Add Product</h1>
+    <form action="" id="FormData">
+        <input type="text" placeholder="Title" id="title">
+        <input type="text" placeholder="Price" id="price">
+        <input type="text" placeholder="IMage URL" id="image">
+        <input type="text" placeholder="Description" id="des">
+        <input type="radio" name="gender" id="men"> Men
+        <input type="radio" name="gender" id="women"> women
+        <input type="submit">
+    </form>
+</body>
+<script>
+    let arr = JSON.parse(localStorage.getItem("products")) || []
+    document.querySelector("#FormData").addEventListener("submit", (e) => {
+        e.preventDefault()
+        let obj = {
+            title: document.getElementById("title").value,
+            image: document.getElementById("image").value,
+            price: document.getElementById("price").value,
+            des: document.getElementById("des").value,
+            gender: document.getElementById("men").checked==true ? "men" : "women"
+        }
+        arr.push(obj)
+        localStorage.setItem("products",JSON.stringify(arr))
+    })
+
+
+</script>
+
+</html>
