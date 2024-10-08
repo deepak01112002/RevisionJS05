@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Edit Form</h1>
+    <form action="" id="FormData">
+        <input type="text" placeholder="Title" id="title">
+        <input type="text" placeholder="Price" id="price">
+        <input type="text" placeholder="IMage URL" id="image">
+        <input type="text" placeholder="Description" id="des">
+        <input type="radio" name="gender" id="men"> Men
+        <input type="radio" name="gender" id="women"> women
+        <input type="submit">
+    </form>
+    <script>
+        let arr = JSON.parse(localStorage.getItem("products")) || []
+        let editIndex = localStorage.getItem("editIndex")
+        if (editIndex != null) {
+            document.getElementById("title").value = arr[editIndex].title
+            document.getElementById("price").value = arr[editIndex].price
+            document.getElementById("image").value = arr[editIndex].image
+            document.getElementById("des").value = arr[editIndex].des
+            if (arr[editIndex].gender == "men") {
+                document.getElementById("men").checked = true
+            } else {
+                document.getElementById("women").checked = true
+            }
+
+        }
+
+        document.getElementById("FormData").addEventListener("submit", (p) => {
+            p.preventDefault()
+            let obj = {
+                title: document.getElementById("title").value,
+                image: document.getElementById("image").value,
+                price: document.getElementById("price").value,
+                des: document.getElementById("des").value,
+                gender: document.getElementById("men").checked == true ? "men" : "women"
+            }
+            arr[editIndex] = obj
+            localStorage.setItem("products",JSON.stringify(arr))
+            localStorage.removeItem("editIndex")
+            window.location.href = "product.html"
+        })
+
+
+    </script>
+</body>
+
+</html>

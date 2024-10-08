@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        #box{
+            display: flex;
+            flex-wrap: wrap;
+        }
+        #card{
+            width: 50%;
+        }
+    </style>
 </head>
 <body>
     <div id="box">
@@ -13,5 +22,36 @@
 <script>
      let arr = JSON.parse(localStorage.getItem("products")) || [];
      console.log(arr)
+     document.getElementById("box").innerHTML = view()
+     function view(){
+        return arr.map((el,index)=>{
+            return `<div id="card">
+                     <div>
+                         <img  src="${el.image}" alt="${el.title}" width="250px">
+                        </div>
+                     <div>
+                         <p>${el.title} - ${el.price}</p>
+                         <p>${el.des} - Gender ${el.gender}</p>
+                         <button onclick="EditData(${index})">Edit</button>
+                         <button onclick="DeleteData(${index})">Delete</button>
+                    </div>
+                
+                </div>`
+        }).join("")
+     }
+
+
+     function DeleteData(index){
+        arr.splice(index,1)
+        localStorage.setItem("products",JSON.stringify(arr))
+        document.getElementById("box").innerHTML = view()
+        
+     }
+
+     function EditData(index){
+        localStorage.setItem("editIndex",index)
+        window.location.href = "edit.html"
+     }
+
 </script>
 </html>
